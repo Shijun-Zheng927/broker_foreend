@@ -2,9 +2,9 @@
   <div>
     <el-container>
       <el-header>
-        <el-button v-if="show" icon="el-icon-s-fold" circle @click="menuClick"></el-button>
-        <el-button v-if="!show" icon="el-icon-s-unfold" circle @click="menuClick"></el-button>
-        <el-button circle class="avater-button">
+        <el-button v-if="show" icon="el-icon-s-fold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
+        <el-button v-if="!show" icon="el-icon-s-unfold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
+        <el-button circle class="main-button avater-button" @click="userClick">
           <span class="avater-span">
             <img src="../assets/logo.png" alt="">
           </span>
@@ -18,60 +18,51 @@
                 <el-menu
                   default-active="1"
                   @open="handleOpen"
-                  @close="handleClose">
-                  <el-submenu index="1">
-                    <template slot="title">
-                      <i class="el-icon-location"></i>
-                      <span>导航一</span>
-                    </template>
-                    <el-menu-item-group>
-                      <template slot="title">分组一</template>
-                      <el-menu-item index="1-1">选项1</el-menu-item>
-                      <el-menu-item index="1-2">选项2</el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item-group title="分组2">
-                      <el-menu-item index="1-3">选项3</el-menu-item>
-                    </el-menu-item-group>
-                    <el-submenu index="1-4">
-                      <template slot="title">选项4</template>
-                      <el-menu-item index="1-4-1">选项1</el-menu-item>
-                    </el-submenu>
-                  </el-submenu>
-                  <el-menu-item index="2">
+                  @close="handleClose"
+                  @select="handleSelect">
+                  <el-menu-item index="1">
                     <i class="el-icon-menu"></i>
-                    <span slot="title">导航二</span>
+                    <span slot="title">&nbsp;概览</span>
                   </el-menu-item>
-                  <el-menu-item index="3" disabled>
-                    <i class="el-icon-document"></i>
-                    <span slot="title">导航三</span>
+                  <el-menu-item index="2">
+                    <i class="el-icon-s-management"></i>
+                    <span slot="title">&nbsp;产品功能</span>
+                  </el-menu-item>
+                  <el-menu-item index="3">
+                    <i class="el-icon-s-goods"></i>
+                    <span slot="title">&nbsp;定价</span>
                   </el-menu-item>
                   <el-menu-item index="4">
-                    <i class="el-icon-setting"></i>
-                    <span slot="title">导航四</span>
+                    <i class="el-icon-info"></i>
+                    <span slot="title">&nbsp;入门</span>
                   </el-menu-item>
-                  <div class="aside-padding"></div>
+                  <el-menu-item index="5">
+                    <i class="el-icon-s-help"></i>
+                    <span slot="title">&nbsp;资源与学习</span>
+                  </el-menu-item>
+                  <!-- <div class="aside-padding"></div> -->
                 </el-menu>
               </div>
             </transition>
           </div>
           <div class="content">
-            Main
+            <router-view></router-view>
           </div>
-          <div class="help-aside">
+          <div class="help-aside" v-show="!show">
             <transition name="el-zoom-in-center">
               <div v-show="!show">
-                help
+                <el-card class="help-card">常见问题</el-card>
               </div>
             </transition>
           </div>
         </div>
       </el-main>
-      <!-- <el-footer>Footer</el-footer> -->
     </el-container>
   </div>
 </template>
 
 <script>
+
 export default ({
   data(){
     return{
@@ -85,23 +76,47 @@ export default ({
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
+    handleSelect(key, keyPath) {
+      switch(key){
+        case '1':
+          this.$router.push('/MainPage/Overview');
+          break;
+        case '2':
+          this.$router.push('/MainPage/Overview');
+          break;
+        case '3':
+          this.$router.push('/MainPage/Overview');
+          break;
+        case '4':
+          this.$router.push('/MainPage/Overview');
+          break;
+        case '5':
+          this.$router.push('/MainPage/Overview');
+          break;
+      }
+    },
     menuClick(evt){
-      console.log("111")
       this.show = !this.show;
       let target = evt.target;
       if(target.nodeName == "I"){
-          target = evt.target.parentNode;
+        target = evt.target.parentNode;
       }
       target.blur();
+    },
+    userClick(){
+      this.$router.push('/PersonalPage')
     }
+  },
+  mounted(){
+    
   }
 })
 </script>
 
 <style>
 .el-header {
-  background-color: #B3C0D1;
-  color: #333;
+  background-color: #409EFF;
+  color: aliceblue;
   line-height: 60px;
   height: 60px;
   position: relative;
@@ -112,44 +127,44 @@ export default ({
   /* text-align: center;
   line-height: 160px; */
   padding: 0;
-}
-.el-button {
-  background-color: rgba(255,0,0,0);
-  border: 0px;
-  width: 45px;
-  height: 45px;
-  font-size: 20px;
-  position: absolute;
-  top: 50%;
-  transform: translate(0, -50%);
-}
-.el-button:active {
-  background-color: rgba(255,0,0,0);
+  height: 100%;
+  width: 1920px;
 }
 </style>
 
 <style scoped>
 .main{
-  width: 1800px;
-  height: 900px;
-}
-.aside{
-  float: left;
-  width: 15%;
+  width: 1920px;
   height: 100%;
 }
+.aside{
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 60px;
+  bottom: 0;
+  width: 300px;
+}
 .content{
-  float: left;
-  width: 85%;
+  position: absolute;
+  left: 300px;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  overflow-y: scroll;
 }
 .help-aside{
-  float: left;
-  width: 15%;
+  display: block;
+  position: absolute;
+  left: 10px;
+  top: 100px;
+  bottom: 0;
+  width: 280px;
 }
-.aside-padding{
+/* .aside-padding{
   width: 100%;
-  height: 800px;
-}
+  height: 629px;
+} */
 .avater-button{
   right: 20px;
   font-size: 30px;
@@ -163,5 +178,25 @@ export default ({
   width: 100%;
   height: 100%;
   border-radius: 50%;
+}
+.help-card {
+  width: 100%;
+  height: 100%;
+}
+.main-button {
+  background-color: rgba(255,0,0,0);
+  border: 0px;
+  width: 45px;
+  height: 45px;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.main-button:active {
+  background-color: rgba(255,0,0,0);
+}
+.main-button:hover {
+  background-color: rgba(221, 221, 221, 0.459);
 }
 </style>
