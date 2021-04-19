@@ -99,12 +99,16 @@ export default {
 				if (valid) {
 					// alert('submit!');
 					console.log(this.ruleForm);
-					this.axios.post("/register",{username:this.ruleForm.username,password:this.ruleForm.password}).then(res =>{
+					this.axios.post("/register",{
+						phone: this.ruleForm.phone,
+						username: this.ruleForm.username,
+						password:this.ruleForm.password,
+						email: this.ruleForm.email}).then(res =>{
 						if(res.data==0){
               this.ruleForm.username='';
               this.$message.error("该用户名已存在")
             }else{
-              this.$router.push('/login');
+              this.$router.push('/LoginPage');
               this.$message({
                 message: '注册成功',
                 type: 'success'

@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Router from 'vue-router'
 import MainPage from '../view/MainPage.vue'
 import LoginPage from '../view/LoginPage.vue'
@@ -7,14 +6,6 @@ import Overview from '../components/Overview.vue'
 import PersonalPage from '../view/PersonalPage.vue'
 import UserInfo from '../components/UserInfo.vue'
 import UserBanl from '../components/UserBanl.vue'
-
-Vue.use(Router)
-
-const originalPush = Router.prototype.push
-
-Router.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
 
 const router = new Router({
   mode: 'history',
@@ -51,17 +42,17 @@ const router = new Router({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/login'||to.path === '/register'||to.path === '/adminlogin') {
-//     next();
-//   } else {
-//     let token = window.sessionStorage.getItem("token");
+router.beforeEach((to, from, next) => {
+  if (to.path === '/LoginPage'||to.path === '/RegisterPage') {
+    next();
+  } else {
+    let token = window.sessionStorage.getItem("token");
  
-//     if (!token) {
-//       next('/login');
-//     } else {
-//       next();
-//     }
-//   }
-// });
+    if (!token) {
+      next('/LoginPage');
+    } else {
+      next();
+    }
+  }
+});
 export default router

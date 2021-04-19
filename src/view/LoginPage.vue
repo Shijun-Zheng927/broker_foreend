@@ -26,8 +26,8 @@
 						</div>
           </div>
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="login-form" size="">
-            <el-form-item label="" prop="username">
-              <el-input v-model="ruleForm.username" prefix-icon='el-icon-user' placeholder="请输入手机号"></el-input>
+            <el-form-item label="" prop="phone">
+              <el-input v-model="ruleForm.phone" prefix-icon='el-icon-phone-outline' placeholder="请输入手机号"></el-input>
             </el-form-item>
             <el-form-item label="" prop="password">
               <el-input type="password" v-model="ruleForm.password" prefix-icon='el-icon-lock' placeholder="请输入密码"></el-input>
@@ -49,12 +49,12 @@ export default {
 	data(){
 		return{
 			ruleForm:{
-				username:'',
+				phone:'',
 				password:''
 			},
 			rules:{
-				username:[
-					{ required: true, message: '请输入用户名', trigger: 'blur' }
+				phone:[
+					{ required: true, message: '请输入手机号', trigger: 'blur' }
 				],
 				password:[
 					{ required: true, message: '请输入密码', trigger: 'blur' }
@@ -70,15 +70,16 @@ export default {
 			this.$refs[formName].validate((valid) => {
 				if (valid) {
 					// alert('submit!');
-					console.log(this.ruleForm);
+					// console.log(this.ruleForm);
 					this.axios.post("/login",this.ruleForm).then(res =>{
-						if(res.data.flag=='fail'){
+						console.log(res);
+						if(res.data.phone==null){
 							this.$message.error("账号或密码错误");
 						}else{
 							window.sessionStorage.setItem("token",res.data.token);
-							window.sessionStorage.setItem("username",this.ruleForm.username);
+							window.sessionStorage.setItem("phone",this.ruleForm.phone);
 							window.sessionStorage.setItem("avatar",res.data.avatar);
-							this.$router.push('/home')
+							this.$router.push('/MainPage')
 						}
 					}).catch(err=>{
 						console.log(err);
