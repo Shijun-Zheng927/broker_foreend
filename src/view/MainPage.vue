@@ -91,7 +91,7 @@ export default ({
           this.$router.push('/MainPage/Overview');
           break;
         case '5':
-          this.$router.push('/MainPage/Overview');
+          this.$router.push('/MdPage');
           break;
       }
     },
@@ -104,12 +104,15 @@ export default ({
       target.blur();
     },
     userClick(){
-      this.$router.push('/PersonalPage')
-    }
+      this.$router.push('/PersonalPage');
+    },
+    // mdClick(){
+    //   this.$router.push('/MdPage');
+    // }
   },
-  mounted(){
+  // mounted(){
     
-  }
+  // }
 })
 </script>
 

@@ -8,7 +8,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import router from './router'
 import Router from 'vue-router'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
+Vue.use(mavonEditor)
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false;
 Vue.use(ElementUI);

@@ -22,7 +22,7 @@
     </el-card>
     <div v-for="(item,index) in ALItemAbout" :key="index">
       <el-card class="item-card">
-        <el-col :span="21">
+        <el-col :span="20">
           <el-row class="item-row1">
             {{item.type}}
           </el-row>
@@ -30,59 +30,66 @@
             {{item.scene}}
           </el-row>
           <el-row class="item-row3">
-            <el-col :span="4">数据持久性高</el-col>
-            <el-col :span="4">千万级TPS</el-col>
-            <el-col :span="4">2.4Gb/s</el-col>
-            <el-col :span="4">多协议</el-col>
-            <el-col :span="4">多协议</el-col>
+            <el-col :span="5">最低存储时间</el-col>
+            <el-col :span="5">OSS传输加速</el-col>
+            <el-col :span="5">图片处理</el-col>
+            <el-col :span="5">最少存储时间要求</el-col>
+            <!-- <el-col :span="5">多协议</el-col> -->
           </el-row>
           <el-row class="item-row4">
-            <el-col :span="4">99.9999999999%</el-col>
-            <el-col :span="4">为用户提供高并发</el-col>
-            <el-col :span="4">单流上传速度快</el-col>
-            <el-col :span="4">支持多协议访问</el-col>
-            <el-col :span="4">支持多协议访问</el-col>
+            <el-col :span="5">{{item.minStorageTime}}</el-col>
+            <el-col :span="5">{{item.ossAcceleration}}</el-col>
+            <el-col :span="5">{{item.imageProcessing}}</el-col>
+            <el-col :span="5">{{item.minStorageTime}}</el-col>
+            <!-- <el-col :span="4">支持多协议访问</el-col> -->
           </el-row>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-row class="price-row1">
-            <span class="price">￥0.09</span>
-            <span class="unit">/GB/月</span>
+            <span class="price">￥{{item.lrsPrice}}</span>
+            <span class="unit">/GB/月(LRS)</span>
           </el-row>
-          <el-row class="price-row2">
+          <el-row class="price-row1" style="padding-top: 0" v-if="item.zrsPrice">
+            <span class="price">￥0.09</span>
+            <span class="unit">/GB/月(ZRS)</span>
+          </el-row>
+          <el-row class="price-row2" v-if="item.zrsPrice">
+            <el-button type="primary" style="margin: 0 auto">了解详情</el-button>
+          </el-row>
+          <el-row class="price-row2"  style="padding-top: 30px" v-if="!item.zrsPrice">
             <el-button type="primary" style="margin: 0 auto">了解详情</el-button>
           </el-row>
         </el-col>
       </el-card>
-      <el-card class="item-card">
-        <el-col :span="21">
+      <el-card class="item-card" v-if="HWItemAbout[index]">
+        <el-col :span="20">
           <el-row class="item-row1">
             {{HWItemAbout[index].type}}
           </el-row>
           <el-row class="item-row2">
-            {{HWItemAbout[index].scene}}
+            {{HWItemAbout[index].introduction}}&nbsp;&nbsp;&nbsp;&nbsp;{{HWItemAbout[index].scene}}
           </el-row>
           <el-row class="item-row3">
-            <el-col :span="4">数据持久性高</el-col>
-            <el-col :span="4">千万级TPS</el-col>
-            <el-col :span="4">2.4Gb/s</el-col>
-            <el-col :span="4">多协议</el-col>
-            <el-col :span="4">多协议</el-col>
+            <el-col :span="5">最低存储时间</el-col>
+            <el-col :span="5">设计持久性（单AZ）</el-col>
+            <el-col :span="5">设计可用性（单AZ）</el-col>
+            <el-col :span="5">响应</el-col>
+            <!-- <el-col :span="5">多协议</el-col> -->
           </el-row>
           <el-row class="item-row4">
-            <el-col :span="4">99.9999999999%</el-col>
-            <el-col :span="4">为用户提供高并发</el-col>
-            <el-col :span="4">单流上传速度快</el-col>
-            <el-col :span="4">支持多协议访问</el-col>
-            <el-col :span="4">支持多协议访问</el-col>
+            <el-col :span="5">{{HWItemAbout[index].minStorageTime}}</el-col>
+            <el-col :span="5">{{HWItemAbout[index].designPersistenceSingle}}</el-col>
+            <el-col :span="5">{{HWItemAbout[index].designAvailabilitySingle}}</el-col>
+            <el-col :span="5">{{HWItemAbout[index].responseTime}}</el-col>
+            <!-- <el-col :span="4">支持多协议访问</el-col> -->
           </el-row>
         </el-col>
-        <el-col :span="3">
+        <el-col :span="4">
           <el-row class="price-row1">
-            <span class="price">￥0.09</span>
+            <span class="price">￥{{HWItemAbout[index].huaweiPrice}}</span>
             <span class="unit">/GB/月</span>
           </el-row>
-          <el-row class="price-row2">
+          <el-row class="price-row2"  style="padding-top: 30px">
             <el-button type="primary" style="margin: 0 auto">了解详情</el-button>
           </el-row>
         </el-col>
@@ -182,7 +189,7 @@ export default {
   padding-top: 12px;
 }
 .price-row1 {
-  padding-top: 30px;
+  padding-top: 20px;
 }
 .price-row2 {
   font-size: 30px;

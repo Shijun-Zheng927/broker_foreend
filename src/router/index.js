@@ -6,6 +6,7 @@ import Overview from '../components/Overview.vue'
 import PersonalPage from '../view/PersonalPage.vue'
 import UserInfo from '../components/UserInfo.vue'
 import UserBanl from '../components/UserBanl.vue'
+import MdPage from '../view/MdPage.vue'
 
 const router = new Router({
   mode: 'history',
@@ -39,6 +40,10 @@ const router = new Router({
         {path: 'UserBanl', component: UserBanl},
       ]
     },
+    {
+      path: '/MdPage',
+      component: MdPage
+    }
   ]
 })
 

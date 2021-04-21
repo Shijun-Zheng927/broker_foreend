@@ -12,8 +12,10 @@
   "dependencies": {
     "axios": "^0.21.1",
     "element-ui": "^2.15.1",
+    "mavon-editor": "^2.9.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.5.1"
+    "vue-router": "^3.5.1",
+    "vue-s-markdown": "^2.3.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
