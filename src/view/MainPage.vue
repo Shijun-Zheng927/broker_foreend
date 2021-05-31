@@ -4,6 +4,7 @@
       <el-header>
         <el-button v-if="show" icon="el-icon-s-fold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
         <el-button v-if="!show" icon="el-icon-s-unfold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
+        <el-button @click="console" icon="el-icon-bank-card" circle style="color: aliceblue" class="main-button console-button" title="控制台"></el-button>
         <el-button circle class="main-button avater-button" @click="userClick">
           <span class="avater-span">
             <img src="../assets/logo.png" alt="">
@@ -46,7 +47,7 @@
             </transition>
           </div>
           <div class="content">
-            <router-view></router-view>
+            <router-view @childFn="parentFn"></router-view>
           </div>
           <div class="help-aside" v-show="!show">
             <transition name="el-zoom-in-center">
@@ -70,6 +71,13 @@ export default ({
     }
   },
   methods: {
+    parentFn(fromChild){
+      this.show = fromChild;
+      console.log(this.show);
+    },
+    console(){
+      this.$router.push('/ConsolePage')
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -170,6 +178,11 @@ export default ({
 } */
 .avater-button{
   right: 20px;
+  font-size: 30px;
+  padding: 4px;
+}
+.console-button{
+  right: 80px;
   font-size: 30px;
   padding: 4px;
 }

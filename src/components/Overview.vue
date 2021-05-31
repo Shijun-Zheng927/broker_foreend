@@ -90,7 +90,7 @@
             <span class="unit">/GB/月</span>
           </el-row>
           <el-row class="price-row2"  style="padding-top: 30px">
-            <el-button type="primary" style="margin: 0 auto">了解详情</el-button>
+            <el-button type="primary" style="margin: 0 auto" @click="createBucket">了解详情</el-button>
           </el-row>
         </el-col>
       </el-card>
@@ -105,10 +105,13 @@ export default {
       itemAbout: [],
       ALItemAbout: [],
       HWItemAbout: [],
+      toFather: false
     }
   },
   methods: {
-
+    createBucket(){
+      this.$emit('childFn', this.toFather)
+    }
   },
   created() {
     this.axios.get("/getAli").then((res) => {

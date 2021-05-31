@@ -10,17 +10,23 @@
         </el-button>
       </el-header>
       <el-main>
-        <div class="aside">
+        <!-- <div class="aside">
           <el-menu
-            default-active="1"
+            default-active="1-1"
             @select="handleSelect">
-            <el-menu-item index="1">
-              <i class="el-icon-user-solid"></i>
-              <span slot="title">&nbsp;个人信息</span>
-            </el-menu-item>
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>存储空间</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="1-1">选项1</el-menu-item>
+                <el-menu-item index="1-2">选项2</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
             <el-menu-item index="2">
               <i class="el-icon-s-goods"></i>
-              <span slot="title">&nbsp;余额</span>
+              <span slot="title">&nbsp;文件管理</span>
             </el-menu-item>
             <el-menu-item index="3">
               <i class="el-icon-info"></i>
@@ -30,12 +36,12 @@
               <i class="el-icon-s-help"></i>
               <span slot="title">&nbsp;资源与学习</span>
             </el-menu-item>
-            <!-- <div class="aside-padding"></div> -->
           </el-menu>
         </div>
         <div class="content">
           <router-view></router-view>
-        </div>
+        </div> -->
+        <router-view></router-view>
       </el-main>
     </el-container>
   </div>
@@ -47,22 +53,6 @@ export default ({
   methods: {
     homeClick(){
       this.$router.push('/MainPage/Overview')
-    },
-    handleSelect(key, keyPath) {
-      switch(key){
-        case '1':
-          this.$router.push('/PersonalPage/UserInfo');
-          break;
-        case '2':
-          this.$router.push('/PersonalPage/UserBanl');
-          break;
-        case '3':
-          this.$router.push('/MainPage/Overview');
-          break;
-        case '4':
-          this.$router.push('/MainPage/Overview');
-          break;
-      }
     },
     userClick(){
       this.$router.push('/PersonalPage')
@@ -94,22 +84,6 @@ export default ({
 </style>
 
 <style scoped>
-.aside{
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 60px;
-  bottom: 0;
-  width: 300px;
-}
-.content{
-  position: absolute;
-  left: 300px;
-  right: 0;
-  top: 60px;
-  bottom: 0;
-  overflow-y: scroll;
-}
 .avater-button{
   right: 20px;
   font-size: 30px;

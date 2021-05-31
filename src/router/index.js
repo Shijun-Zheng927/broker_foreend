@@ -7,6 +7,11 @@ import PersonalPage from '../view/PersonalPage.vue'
 import UserInfo from '../components/UserInfo.vue'
 import UserBanl from '../components/UserBanl.vue'
 import MdPage from '../view/MdPage.vue'
+import ShopPanel from '../components/ShopPanel.vue'
+import ConsolePage from '../view/ConsolePage.vue'
+import BucketPanel from '../components/BucketPanel.vue'
+import BucketList from '../components/BucketList.vue'
+import FileManage from '../components/FileManage.vue'
 
 const router = new Router({
   mode: 'history',
@@ -16,7 +21,8 @@ const router = new Router({
       component: MainPage,
       redirect: '/MainPage/Overview',
       children: [
-        {path: 'Overview', component: Overview}
+        {path: 'Overview', component: Overview},
+        {path: 'ShopPanel', component: ShopPanel}
       ]
     },
     {
@@ -41,23 +47,41 @@ const router = new Router({
       ]
     },
     {
+      path: '/ConsolePage',
+      name: 'ConsolePage',
+      component: ConsolePage,
+      redirect: '/ConsolePage/BucketList',
+      children: [
+        {
+          path: 'BucketPanel', 
+          component: BucketPanel, 
+          name: 'BucketPanel',
+          children: [
+            {path: 'FileManage', component: FileManage, name: 'FileManage'}
+          ]
+        },
+        {path: 'BucketList', component: BucketList, name: 'BucketList'},
+        // {path: 'FileManage', component: FileManage, name: 'FileManage'}
+      ]
+    },
+    {
       path: '/MdPage',
       component: MdPage
     }
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/LoginPage'||to.path === '/RegisterPage') {
-    next();
-  } else {
-    let token = window.sessionStorage.getItem("token");
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/LoginPage'||to.path === '/RegisterPage') {
+//     next();
+//   } else {
+//     let token = window.sessionStorage.getItem("token");
  
-    if (!token) {
-      next('/LoginPage');
-    } else {
-      next();
-    }
-  }
-});
+//     if (!token) {
+//       next('/LoginPage');
+//     } else {
+//       next();
+//     }
+//   }
+// });
 export default router
