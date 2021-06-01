@@ -34,7 +34,7 @@
       </el-menu>
     </div>
     <div class="content">
-      111
+      <div class="top-padding"></div>
       <router-view></router-view>
     </div>
   </div>
@@ -59,7 +59,12 @@ export default {
           });
           break;
         case '2':
-          this.$router.push('/ConsolePage/FileManage');
+          this.$router.push({
+            name: 'FileManager',
+            query: {
+              bucket: this.bucket
+            }
+          });
           break;
         case '3':
           this.$router.push('/MainPage/Overview');
@@ -100,5 +105,9 @@ export default {
   /* 139px */
   bottom: 0;
   overflow-y: scroll;
+}
+.top-padding {
+  width: 100%;
+  height: 79px;
 }
 </style>

@@ -17,7 +17,7 @@
 export default {
   data() {
     return {
-      banlance: '',
+      banlance: '0',
     }
   },
   methods: {

@@ -2,7 +2,8 @@
   <div>
     <el-container>
       <el-header>
-        <el-button icon="el-icon-s-fold" circle @click="homeClick" style="color: aliceblue" class="main-button"></el-button>
+        <el-button icon="el-icon-s-home" circle @click="homeClick" style="color: aliceblue" class="main-button"></el-button>
+        <el-button @click="console" icon="el-icon-bank-card" circle style="color: aliceblue" class="console-button" title="控制台"></el-button>
         <el-button circle class="main-button avater-button" @click="userClick">
           <span class="avater-span">
             <img src="../assets/logo.png" alt="">
@@ -67,6 +68,9 @@ export default ({
     userClick(){
       this.$router.push('/PersonalPage')
     },
+    console(){
+      this.$router.push('/ConsolePage')
+    },
   },
   mounted(){
     
@@ -83,10 +87,6 @@ export default ({
   position: relative;
 }
 .el-main {
-  /* background-color: #E9EEF3; */
-  /* color: #333; */
-  /* text-align: center;
-  line-height: 160px; */
   padding: 0;
   height: 100%;
   width: 1920px;
@@ -149,5 +149,23 @@ export default ({
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
+}
+.console-button{
+  right: 80px;
+  font-size: 25px;
+  padding: 4px;
+  background-color: rgba(255,0,0,0);
+  border: 0px;
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.console-button:active {
+  background-color: rgba(255,0,0,0);
+}
+.console-button:hover {
+  background-color: rgba(221, 221, 221, 0.459);
 }
 </style>

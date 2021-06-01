@@ -11,7 +11,9 @@ import ShopPanel from '../components/ShopPanel.vue'
 import ConsolePage from '../view/ConsolePage.vue'
 import BucketPanel from '../components/BucketPanel.vue'
 import BucketList from '../components/BucketList.vue'
-import FileManage from '../components/FileManage.vue'
+import FileManager from '../components/FileManager.vue'
+import UpFile from '../components/UpFile.vue'
+import AdminLogin from '../view/AdminLogin.vue'
 
 const router = new Router({
   mode: 'history',
@@ -57,7 +59,8 @@ const router = new Router({
           component: BucketPanel, 
           name: 'BucketPanel',
           children: [
-            {path: 'FileManage', component: FileManage, name: 'FileManage'}
+            {path: 'FileManager', component: FileManager, name: 'FileManager'},
+            {path: 'UpFile', component: UpFile, name: 'UpFile'}
           ]
         },
         {path: 'BucketList', component: BucketList, name: 'BucketList'},
@@ -67,6 +70,10 @@ const router = new Router({
     {
       path: '/MdPage',
       component: MdPage
+    },
+    {
+      path: '/AdminLogin',
+      component: AdminLogin
     }
   ]
 })

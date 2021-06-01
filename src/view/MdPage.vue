@@ -9,6 +9,10 @@
         </el-button>
       </el-header>
       <el-main>
+        <div class="name-div">
+          请输入文档名称：
+          <el-input v-model="name" class="name-input"></el-input>
+        </div>
         <mavon-editor
           v-model="content"
           ref="md"
@@ -16,6 +20,9 @@
           @change="change"
           class="meClass"
         />
+        <div style="margin: 0 auto;width: 70px;height: 200px">
+          <el-button type="primary" @click="upIntroduction">提交</el-button>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -23,25 +30,67 @@
 
 <script>
 
-export default ({
+export default {
   data() {
     return {
-      content: "",
-      html:""
+      name: '',
+      content: '', // 输入的markdown
+      html: '', // 及时转的html
     }
   },
   methods: {
-    userClick(){
-      this.$router.push('/PersonalPage')
+    // userClick(){
+    //   this.$router.push('/PersonalPage')
+    // },
+    imgAdd(pos, file){
+      var formData = new FormData();
+      formData.append("file", file);
+      console.log(formData.getAll("file"));
+      this.axios({
+        url: "/uploadImg",
+        data: formData,
+        method: "post",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.$refs.md.$img2Url(pos, res.data);
+      });
     },
-    imgAdd(){
-
+    change(value, render) {
+      this.html = render;
     },
-    change(){
-
+    upIntroduction(){
+      this.$confirm('确认提交吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '提交成功!'
+        });
+        this.axios
+          .post("/uploadIntroduce", {
+            file: this.html,
+            name: this.name,
+          })
+          .then((res) => {
+            this.name = '';
+            this.content = '';
+            this.html = '';
+          });
+        // this.axios.get("/getIntroduceName",{params:{name: this.name}})
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消提交'
+        });          
+      });
     }
   },
-})
+}
 </script>
 
 <style>
@@ -61,6 +110,14 @@ export default ({
 </style>
 
 <style scoped>
+.name-input {
+  width: 400px;
+  margin-left: 20px;
+}
+.name-div {
+  width: 80%;
+  margin: 40px auto;
+}
 .avater-button{
   right: 20px;
   font-size: 30px;

@@ -5,17 +5,29 @@
         <h2>修改个人信息</h2>
       </el-row>
       <el-row style="padding-left: 30px">
-        <h4>手机</h4>
+        <h4>修改头像</h4>
+        <el-upload
+          class="avatar-uploader"
+          :http-request="upAvatar"
+          action=""
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-row>
+      <el-row style="padding-left: 30px;padding-top: 30px">
+        <h4>修改手机号码</h4>
         <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign">
-          <el-form-item label="修改手机" prop="phone">
+          <el-form-item label="修改手机号码" prop="phone">
             <el-input v-model="formLabelAlign.phone" style="width: 300px"></el-input>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button type="primary" @click="phoneChange('formLabelAlign')">修改</el-button>
           </el-form-item>
+          <el-button type="primary" @click="phoneChange('formLabelAlign')">修改</el-button>
         </el-form>
       </el-row>
       <el-row style="padding-left: 30px;padding-top: 30px">
-        <h4>密码</h4>
+        <h4>修改密码</h4>
         <el-form :label-position="labelPosition" label-width="80px" :model="passwordForm" :rules="rules" ref="passwordForm">
           <el-form-item label="原密码" prop="oldPass">
             <el-input v-model="passwordForm.oldPass" style="width: 300px"></el-input>
@@ -46,6 +58,7 @@ export default {
 			}
 		};
     return {
+      imageUrl: '',
       labelPosition: 'top',
       formLabelAlign: {
         phone: '',
@@ -71,7 +84,7 @@ export default {
 					{ min: 3,max: 8,message:"长度在3到8个字符",trigger:'blur'}
         ],
         confPass: [
-          { validator: validatePass2, trigger: 'blur' }
+          { required: true, validator: validatePass2, trigger: 'blur' }
         ],
       }
     };
@@ -94,8 +107,40 @@ export default {
           return false;
         }
       })
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    upAvatar(param){
+      this.imageUrl = param.file.url;
+      var formData = new FormData();
+      formData.append("file", param.file);
+      this.axios.post("/avatar", formData).then((res) => {
+        if (res != null) {
+          window.sessionStorage.setItem("avatar",res.data);
+          console.log(res.data);
+          this.imageUrl = res.data;
+        }
+      }).catch(err => {
+        console.log(err);
+      });
     }
-  }
+  },
+  created(){
+    this.imageUrl = window.sessionStorage.getItem("avatar");
+  },
 }
 </script>
 

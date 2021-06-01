@@ -25,7 +25,7 @@ Router.prototype.push = function push(location) {
 
 // 引用axios，并设置基础URL为后端服务api地址
 // var axios = require('axios')
-axios.defaults.baseURL = "http://192.168.1.106:8443"
+axios.defaults.baseURL = "http://192.168.1.109:8443"
 axios.interceptors.request.use(config=>{
   console.log(config)
   config.headers.Authorization = window.sessionStorage.getItem("token")

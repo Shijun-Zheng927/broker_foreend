@@ -4,7 +4,7 @@
       <el-header>
         <el-button v-if="show" icon="el-icon-s-fold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
         <el-button v-if="!show" icon="el-icon-s-unfold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
-        <el-button @click="console" icon="el-icon-bank-card" circle style="color: aliceblue" class="main-button console-button" title="控制台"></el-button>
+        <el-button @click="console" icon="el-icon-bank-card" circle style="color: aliceblue" class="console-button" title="控制台"></el-button>
         <el-button circle class="main-button avater-button" @click="userClick">
           <span class="avater-span">
             <img src="../assets/logo.png" alt="">
@@ -133,10 +133,6 @@ export default ({
   position: relative;
 }
 .el-main {
-  /* background-color: #E9EEF3; */
-  /* color: #333; */
-  /* text-align: center;
-  line-height: 160px; */
   padding: 0;
   height: 100%;
   width: 1920px;
@@ -172,10 +168,6 @@ export default ({
   bottom: 0;
   width: 280px;
 }
-/* .aside-padding{
-  width: 100%;
-  height: 629px;
-} */
 .avater-button{
   right: 20px;
   font-size: 30px;
@@ -183,8 +175,21 @@ export default ({
 }
 .console-button{
   right: 80px;
-  font-size: 30px;
+  font-size: 25px;
   padding: 4px;
+  background-color: rgba(255,0,0,0);
+  border: 0px;
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.console-button:active {
+  background-color: rgba(255,0,0,0);
+}
+.console-button:hover {
+  background-color: rgba(221, 221, 221, 0.459);
 }
 .avater-span{
   width: 40px;
