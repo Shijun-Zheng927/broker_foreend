@@ -121,6 +121,8 @@ export default {
       //   this.itemAbout[2*i] = this.ALItemAbout[i];
       // }
       // console.log(this.itemAbout);
+    }).catch((err)=>{
+      console.log(err);
     });
     this.axios.get("/getHuawei").then((res) => {
       this.HWItemAbout = res.data;
@@ -128,6 +130,8 @@ export default {
       //   this.itemAbout[2*i+1] = this.HWItemAbout[i];
       // }
       // console.log(this.itemAbout);
+    }).catch((err)=>{
+      console.log(err);
     });
   },
 }

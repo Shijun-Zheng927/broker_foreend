@@ -96,7 +96,7 @@ export default ({
           this.$router.push('/MainPage/Overview');
           break;
         case '4':
-          this.$router.push('/MainPage/Overview');
+          this.test();
           break;
         case '5':
           this.$router.push('/MdPage');
@@ -114,6 +114,48 @@ export default ({
     userClick(){
       this.$router.push('/PersonalPage');
     },
+    test(){
+      // var formData = new FormData();
+      // formData.append("bucketName", 'test');
+      // formData.append("objectPath", 'test');
+      // formData.append("file", file);
+      // console.log(formData);
+      // this.axios({
+      //   url: "/putFileStream",
+      //   data: formData,
+      //   method: "post",
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // }).then((res) => {
+      //   console.log(res.data);
+      // }).catch((err)=>{
+      //   console.log(err);
+      // });
+      this.axios({
+        url: '/downloadTest',
+        method: 'post',
+        responseType: 'blob'
+      }).then((res)=>{
+        const content = res
+        const blob = new Blob([content])
+        const fileName = '导出信息.xlsx'
+        if ('download' in document.createElement('a')) { // 非IE下载
+          const elink = document.createElement('a')
+          elink.download = fileName
+          elink.style.display = 'none'
+          elink.href = URL.createObjectURL(blob)
+          document.body.appendChild(elink)
+          elink.click()
+          URL.revokeObjectURL(elink.href) // 释放URL 对象
+          document.body.removeChild(elink)
+        } else { // IE10+下载
+          navigator.msSaveBlob(blob, fileName)
+        }
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
     // mdClick(){
     //   this.$router.push('/MdPage');
     // }

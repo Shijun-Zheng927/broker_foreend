@@ -14,6 +14,7 @@ import BucketList from '../components/BucketList.vue'
 import FileManager from '../components/FileManager.vue'
 import UpFile from '../components/UpFile.vue'
 import AdminLogin from '../view/AdminLogin.vue'
+import BucketAbout from '../components/BucketAbout.vue'
 
 const router = new Router({
   mode: 'history',
@@ -58,9 +59,11 @@ const router = new Router({
           path: 'BucketPanel', 
           component: BucketPanel, 
           name: 'BucketPanel',
+          redirect: '/ConsolePage/BucketPanel/BucketAbout',
           children: [
             {path: 'FileManager', component: FileManager, name: 'FileManager'},
-            {path: 'UpFile', component: UpFile, name: 'UpFile'}
+            {path: 'UpFile', component: UpFile, name: 'UpFile'},
+            {path: 'BucketAbout', component: BucketAbout, name: 'BucketAbout'}
           ]
         },
         {path: 'BucketList', component: BucketList, name: 'BucketList'},

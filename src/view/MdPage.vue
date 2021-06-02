@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header>
-        <el-button circle class="main-button avater-button" @click="userClick">
+        <el-button circle class="main-button avater-button">
           <span class="avater-span">
             <img src="../assets/logo.png" alt="">
           </span>
@@ -43,11 +43,29 @@ export default {
     //   this.$router.push('/PersonalPage')
     // },
     imgAdd(pos, file){
+      // var formData = new FormData();
+      // formData.append("file", file);
+      // console.log(formData.getAll("file"));
+      // this.axios({
+      //   url: "/uploadImg",
+      //   data: formData,
+      //   method: "post",
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // }).then((res) => {
+      //   console.log(res.data);
+      //   this.$refs.md.$img2Url(pos, res.data);
+      // });
       var formData = new FormData();
+      formData.append("bucketName", 'test');
+      formData.append("objectPath", 'test');
       formData.append("file", file);
+      console.log(formData.getAll("bn"));
+      console.log(formData.getAll("objectPath"));
       console.log(formData.getAll("file"));
       this.axios({
-        url: "/uploadImg",
+        url: "/putFileStream",
         data: formData,
         method: "post",
         headers: {
@@ -55,7 +73,8 @@ export default {
         },
       }).then((res) => {
         console.log(res.data);
-        this.$refs.md.$img2Url(pos, res.data);
+      }).catch((err)=>{
+        console.log(err);
       });
     },
     change(value, render) {
