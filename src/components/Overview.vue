@@ -54,10 +54,10 @@
             <span class="unit">/GB/月(ZRS)</span>
           </el-row>
           <el-row class="price-row2" v-if="item.zrsPrice">
-            <el-button type="primary" style="margin: 0 auto">了解详情</el-button>
+            <el-button type="primary" style="margin: 0 auto" @click="createBucket">了解详情</el-button>
           </el-row>
           <el-row class="price-row2"  style="padding-top: 30px" v-if="!item.zrsPrice">
-            <el-button type="primary" style="margin: 0 auto">了解详情</el-button>
+            <el-button type="primary" style="margin: 0 auto" @click="createBucket">了解详情</el-button>
           </el-row>
         </el-col>
       </el-card>
@@ -110,8 +110,10 @@ export default {
   },
   methods: {
     createBucket(){
-      this.$emit('childFn', this.toFather)
-    }
+      this.$emit('childFn', this.toFather);
+      this.$router.push('/MainPage/ShopPanel')
+    },
+
   },
   created() {
     this.axios.get("/getAli").then((res) => {

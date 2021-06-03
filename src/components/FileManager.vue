@@ -1,6 +1,9 @@
 <template>
   <div>
     <el-card class="file-card">
+      <el-row style="padding-left: 30px">
+        <h2>文件管理</h2>
+      </el-row>
       <div class="top-button">
         <el-button type="primary" @click="toUpload">上传文件</el-button>
         <el-button type="info" style="margin-left: 20px" @click="newFolder">新建目录</el-button>
@@ -9,7 +12,7 @@
       <el-table
         :data="tableData"
         stripe
-        style="width: 100%">
+        style="width: 1100px;margin: 20px auto">
         <el-table-column
           prop="fileName"
           label="文件名"
@@ -205,5 +208,7 @@ export default {
 }
 .top-button {
   width: 100%;
+  padding-left: 30px;
+  margin-top: 30px;
 }
 </style>

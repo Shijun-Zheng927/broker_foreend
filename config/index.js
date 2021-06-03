@@ -10,7 +10,18 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/apis': {
+				//代理api
+				target: 'http://192.168.1.109:8443', // 代理接口(注意只要域名就够了)
+				changeOrigin: true, //是否跨域
+				// ws: true, // proxy websockets
+				pathRewrite: {
+					//重写路径
+					'^/apis': '' //代理路径
+				}
+			}
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

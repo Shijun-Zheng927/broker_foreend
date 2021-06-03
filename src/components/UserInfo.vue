@@ -127,7 +127,7 @@ export default {
       this.imageUrl = param.file.url;
       var formData = new FormData();
       formData.append("file", param.file);
-      this.axios.post("/avatar", formData).then((res) => {
+      this.axios.post("/setHead", formData).then((res) => {
         if (res != null) {
           window.sessionStorage.setItem("avatar",res.data);
           console.log(res.data);
@@ -148,5 +148,32 @@ export default {
 .user-info-card {
   margin: 40px auto;
   width: 1200px;
+}
+.avatar-uploader{
+  margin-left: 100px;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  margin-left: 100px;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

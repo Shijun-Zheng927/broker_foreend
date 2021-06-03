@@ -29,7 +29,7 @@
         </el-menu-item>
         <el-menu-item index="3">
           <i class="el-icon-info"></i>
-          <span slot="title">&nbsp;入门</span>
+          <span slot="title">&nbsp;访问权限</span>
         </el-menu-item>
         <el-menu-item index="4">
           <i class="el-icon-s-help"></i>
@@ -71,7 +71,12 @@ export default {
           });
           break;
         case '3':
-          this.$router.push('/MainPage/Overview');
+          this.$router.push({
+            name: 'RwPolicy',
+            query: {
+              bucket: this.bucket
+            }
+          });
           break;
         case '4':
           this.$router.push('/MainPage/Overview');

@@ -2,8 +2,9 @@
   <div>
     <el-container>
       <el-header>
-        <el-button v-if="show" icon="el-icon-s-fold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
-        <el-button v-if="!show" icon="el-icon-s-unfold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
+        <el-button v-if="show&&home" icon="el-icon-s-fold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
+        <el-button v-if="!show&&home" icon="el-icon-s-unfold" circle @click="menuClick" style="color: aliceblue" class="main-button"></el-button>
+        <el-button v-if="!home" icon="el-icon-s-home" circle @click="homeClick" style="color: aliceblue" class="main-button"></el-button>
         <el-button @click="console" icon="el-icon-bank-card" circle style="color: aliceblue" class="console-button" title="控制台"></el-button>
         <el-button circle class="main-button avater-button" @click="userClick">
           <span class="avater-span">
@@ -68,11 +69,20 @@ export default ({
   data(){
     return{
       show: true,
+      home: true,
+      url:'',
+      filename:'',
     }
   },
   methods: {
+    homeClick(){
+      this.home = true;
+      this.show = true;
+      this.$router.push('/MainPage/Overview');
+    },
     parentFn(fromChild){
       this.show = fromChild;
+      this.home = fromChild;
       console.log(this.show);
     },
     console(){
@@ -115,50 +125,24 @@ export default ({
       this.$router.push('/PersonalPage');
     },
     test(){
-      // var formData = new FormData();
-      // formData.append("bucketName", 'test');
-      // formData.append("objectPath", 'test');
-      // formData.append("file", file);
-      // console.log(formData);
-      // this.axios({
-      //   url: "/putFileStream",
-      //   data: formData,
-      //   method: "post",
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // }).then((res) => {
-      //   console.log(res.data);
-      // }).catch((err)=>{
-      //   console.log(err);
-      // });
-      this.axios({
-        url: '/downloadTest',
-        method: 'post',
-        responseType: 'blob'
-      }).then((res)=>{
-        const content = res
-        const blob = new Blob([content])
-        const fileName = '导出信息.xlsx'
-        if ('download' in document.createElement('a')) { // 非IE下载
-          const elink = document.createElement('a')
-          elink.download = fileName
-          elink.style.display = 'none'
-          elink.href = URL.createObjectURL(blob)
-          document.body.appendChild(elink)
-          elink.click()
-          URL.revokeObjectURL(elink.href) // 释放URL 对象
-          document.body.removeChild(elink)
-        } else { // IE10+下载
-          navigator.msSaveBlob(blob, fileName)
-        }
+      this.axios.post('/downloadTest').then((res)=>{
+        console.log(res.data.url);
+        // this.itemClick();
+        let a = document.createElement('a');
+        let url = 'http://192.168.1.109:8443/file/a.jpg';
+        console.log(this.url);
+        fetch(url).then(res => res.blob()).then(blob => {
+          a.href = URL.createObjectURL(blob);
+          a.download = 'a.jpg';
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(a.href);
+          document.body.removeChild(a);
+        });
       }).catch((err)=>{
-        console.log(err)
+        console.log(err);
       })
     }
-    // mdClick(){
-    //   this.$router.push('/MdPage');
-    // }
   },
   // mounted(){
     
