@@ -33,7 +33,7 @@
         </el-menu-item>
         <el-menu-item index="4">
           <i class="el-icon-s-help"></i>
-          <span slot="title">&nbsp;资源与学习</span>
+          <span slot="title">&nbsp;标签/日志</span>
         </el-menu-item>
       </el-menu>
     </div>
@@ -79,7 +79,12 @@ export default {
           });
           break;
         case '4':
-          this.$router.push('/MainPage/Overview');
+          this.$router.push({
+            name: 'BucketTag',
+            query: {
+              bucket: this.bucket
+            }
+          });
           break;
       }
     },

@@ -7,7 +7,7 @@
       <div class="top-button">
         <el-button type="primary" @click="toUpload">上传文件</el-button>
         <el-button type="info" style="margin-left: 20px" @click="newFolder">新建目录</el-button>
-        <el-button style="margin-left: 20px" @click="fresh">刷新</el-button>
+        <el-button style="margin-left: 20px" @click="refresh">刷新</el-button>
       </div>
       <el-table
         :data="tableData"
@@ -56,15 +56,18 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.axios.post('/changeOrder',{id:this.orderlist[index].id,status:'2'}).then(res => {
+        this.axios.delete('/deleteObject',{
+          bucketName: this.bucket,
+          objectKey: ''
+        }).then(res => {
           this.tableData.splice(index,1);
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
         }).catch(err => {
           console.log(err);
         })
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -72,8 +75,14 @@ export default {
         });          
       });
     },
-    fresh(){
-
+    refresh(){
+      this.axios.post('/simpleList',{
+        bucketName: this.bucket
+      }).then((res)=>{
+        this.tableData = res.data;
+      }).catch((err)=>{
+        console.log(err);
+      })
     },
     toUpload(){
       this.$router.push({
@@ -197,6 +206,7 @@ export default {
   },
   created(){
     this.getRouterData();
+    this.refresh();
   }
 }
 </script>

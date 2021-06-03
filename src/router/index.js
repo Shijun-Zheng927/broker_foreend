@@ -16,6 +16,7 @@ import UpFile from '../components/UpFile.vue'
 import AdminLogin from '../view/AdminLogin.vue'
 import BucketAbout from '../components/BucketAbout.vue'
 import RwPolicy from '../components/RwPolicy.vue'
+import BucketTag from '../components/BucketTag.vue'
 
 const router = new Router({
   mode: 'history',
@@ -66,6 +67,7 @@ const router = new Router({
             {path: 'UpFile', component: UpFile, name: 'UpFile'},
             {path: 'BucketAbout', component: BucketAbout, name: 'BucketAbout'},
             {path: 'RwPolicy', component: RwPolicy, name: 'RwPolicy'},
+            {path: 'BucketTag', component: BucketTag, name: 'BucketTag'},
           ]
         },
         {path: 'BucketList', component: BucketList, name: 'BucketList'},
