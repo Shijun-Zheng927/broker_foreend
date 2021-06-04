@@ -78,7 +78,7 @@ export default {
 						}else{
 							window.sessionStorage.setItem("token",res.data.token);
 							window.sessionStorage.setItem("phone",this.ruleForm.phone);
-							window.sessionStorage.setItem("avatar",res.data.avatar);
+							window.sessionStorage.setItem("avatar",res.data.head);
 							this.$router.push('/MainPage')
 						}
 					}).catch(err=>{

@@ -43,7 +43,7 @@ export default {
 <style>
 .md {
   width: 90%;
-  margin: 0 auto;
+  margin: 20px auto;
   border: none !important;
 }
 </style>
@@ -67,6 +67,6 @@ export default {
 .response-div{
   width: 75%;
   font-size: 18px;
-  margin: 20px auto;
+  margin: 30px auto;
 }
 </style>

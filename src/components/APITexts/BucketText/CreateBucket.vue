@@ -15,22 +15,22 @@
     </template>
     <template v-slot:form>
       <el-form label-position="left" label-width="80px" :model="formData">
-        <el-form-item label="名称">
-          <el-input v-model="formData.name"></el-input>
+        <el-form-item label="桶名称">
+          <el-input v-model="formData.bucketName"></el-input>
         </el-form-item>
-        <el-form-item label="活动区域">
-          <el-input v-model="formData.region"></el-input>
+        <el-form-item label="存储类型">
+          <el-input v-model="formData.storageClass"></el-input>
         </el-form-item>
-        <el-form-item label="活动形式">
-          <el-input v-model="formData.type"></el-input>
+        <el-form-item label="读写权限">
+          <el-input v-model="formData.rwPolicy"></el-input>
         </el-form-item>
       </el-form>
     </template>
     <template v-slot:button>
-      <el-button type="primary">click</el-button>
+      <el-button type="primary" @click="send">发送</el-button>
     </template>
     <template v-slot:response>
-      aaa
+      {{response}}
     </template>
   </api-template>
 </template>
@@ -41,11 +41,30 @@ export default {
     return{
       html:'',
       formData:{
-        name:'',
+        bucketName:'',
         region:'',
         type:'',
-      }
+      },
+      response:''
     }
+  },
+  methods:{
+    send(){
+      this.axios.post('/createBucket',this.formData).then((res)=>{
+        this.response = res.data;
+      }).catch((err)=>{
+        console.log(err);
+      });
+    }
+  },
+  created(){
+    this.axios.get('/getIntroduceName',{params:{
+      name: this.$getHref.str()
+    }}).then((res) => {
+      this.html = res.data;
+    }).catch((err)=>{
+      console.log(err);
+    });
   }
 }
 </script>
