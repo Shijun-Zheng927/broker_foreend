@@ -5,7 +5,7 @@
         <el-button icon="el-icon-s-home" circle @click="homeClick" style="color: aliceblue" class="main-button"></el-button>
         <el-button circle class="main-button avater-button" @click="userClick">
           <span class="avater-span">
-            <img src="../assets/logo.png" alt="">
+            <img :src="imgUrl" alt="">
           </span>
         </el-button>
       </el-header>
@@ -19,6 +19,11 @@
 <script>
 
 export default ({
+  data(){
+    return{
+      imgUrl: '',
+    }
+  },
   methods: {
     homeClick(){
       this.$router.push('/MainPage/Overview')
@@ -27,8 +32,8 @@ export default ({
       this.$router.push('/PersonalPage')
     },
   },
-  mounted(){
-    
+  created(){
+    this.imgUrl = window.sessionStorage.getItem('avatar');
   }
 })
 </script>

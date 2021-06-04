@@ -8,7 +8,7 @@
         <el-button @click="console" icon="el-icon-bank-card" circle style="color: aliceblue" class="console-button" title="控制台"></el-button>
         <el-button circle class="main-button avater-button" @click="userClick">
           <span class="avater-span">
-            <img src="../assets/logo.png" alt="">
+            <img :src="imgUrl" alt="">
           </span>
         </el-button>
       </el-header>
@@ -40,7 +40,7 @@
                   </el-menu-item>
                   <el-menu-item index="5">
                     <i class="el-icon-s-help"></i>
-                    <span slot="title">&nbsp;资源与学习</span>
+                    <span slot="title">&nbsp;API说明文档</span>
                   </el-menu-item>
                   <!-- <div class="aside-padding"></div> -->
                 </el-menu>
@@ -72,6 +72,7 @@ export default ({
       home: true,
       url:'',
       filename:'',
+      imgUrl: '',
     }
   },
   methods: {
@@ -109,7 +110,7 @@ export default ({
           this.test();
           break;
         case '5':
-          this.$router.push('/MdPage');
+          this.$router.push('/APIText');
           break;
       }
     },
@@ -144,6 +145,9 @@ export default ({
       })
     },
   },
+  created(){
+    this.imgUrl = window.sessionStorage.getItem('avatar');
+  }
 })
 </script>
 

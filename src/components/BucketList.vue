@@ -1,18 +1,14 @@
 <template> 
   <div>
     <el-card class="list-card">
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-        <!-- <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item> -->
-        <el-breadcrumb-item>Bucket列表</el-breadcrumb-item>
-      </el-breadcrumb>
       <h1 class="bucket-list-title">Bucket列表</h1>
       <el-table
         :data="tableData"
         stripe
-        style="width: 1400px;margin: 0 auto">
+        style="width: 1400px;margin: 30px auto">
         <el-table-column 
-          label="Bucket" 
-          width="180">
+          label="bucketName" 
+          width="300">
           <template slot-scope="scope">
             <el-button
               size="text"
@@ -20,13 +16,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="type"
+          prop="storageClass"
           label="存储类型"
-          width="180">
+          width="300">
         </el-table-column>
         <el-table-column
           prop="location"
-          label="地域">
+          label="地域"
+          width="300">
         </el-table-column>
         <el-table-column
           prop="createDate"
@@ -43,6 +40,21 @@
         </el-table-column>
       </el-table>
     </el-card>
+    <el-card class="list-card">
+      <h1 class="bucket-list-title">流量统计</h1>
+      <div class="flow-div">
+        <div class="up-flow">
+          <h1>上传流量</h1>
+          <br/>
+          <h2>{{upFlow}}</h2>
+        </div>
+        <div class="down-flow">
+          <h1>下载流量</h1>
+          <br/>
+          <h2>{{downFlow}}</h2>
+        </div>
+      </div>
+    </el-card>
   </div>  
 </template>
 
@@ -51,26 +63,10 @@ export default {
   data(){
     return{
       tableData: [
-        {
-          type: '归档',
-          bucketName: 'bucket1',
-          location: '北京',
-          createDate: '2000',
-        },
-        {
-          type: '归档',
-          bucketName: 'bucket2',
-          location: '北京',
-          createDate: '2000',
-        },
-        {
-          type: '归档',
-          bucketName: 'bucket3',
-          location: '北京',
-          createDate: '2000',
-        }
+        
       ],
-      list:[],
+      downFlow:'',
+      upFlow:'',
     }
   },
   methods:{
@@ -83,14 +79,15 @@ export default {
       });
     },
     delectBucket(index,row){
+      console.log(row.bucketName);
       this.$confirm('确认删除该存储空间吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(()=>{
-        this.axios.delete('/deleteBucket',{
-          bucketName: row.bucketName,
-        }).then((res)=>{
+        this.axios.delete('/deleteBucket',{data:{
+          bucketName:row.bucketName
+        }}).then((res)=>{
           if(res.data === 'fail'){
             this.$message({
               type: 'error',
@@ -101,6 +98,7 @@ export default {
               type: 'success',
               message: '删除成功',
             });
+            this.tableData.splice(index,1);
           }
         }).catch((err)=>{
           this.$message({
@@ -118,10 +116,20 @@ export default {
   },
   created(){
     this.axios.get('/listAllBucket').then((res)=>{
-      this.list = res.data;
+      this.tableData = res.data;
     }).catch((err)=>{
       console.log(err);
-    })
+    });
+    this.axios.post('/getUpload').then((res)=>{
+      this.upFlow = res.data;
+    }).catch((err)=>{
+      console.log(err);
+    });
+    this.axios.post('/getDownload').then((res)=>{
+      this.downFlow = res.data;
+    }).catch((err)=>{
+      console.log(err);
+    });
   }
 }
 </script>
@@ -133,5 +141,20 @@ export default {
 }
 .bucket-list-title{
   margin: 30px;
+}
+.flow-div{
+  margin: 0 30px 0 30px;
+  height: 200px;
+  padding-top: 30px;
+}
+.up-flow{
+  width: 670px;
+  float: left;
+  text-align: center;
+}
+.down-flow{
+  width: 670px;
+  float: left;
+  text-align: center;
 }
 </style>

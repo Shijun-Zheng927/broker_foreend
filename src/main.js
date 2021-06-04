@@ -10,12 +10,14 @@ import router from './router'
 import Router from 'vue-router'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import APITemplate from './components/APITemplate.vue'
 
 Vue.use(mavonEditor)
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(Router);
+Vue.component('api-template',APITemplate);
 
 const originalPush = Router.prototype.push
 

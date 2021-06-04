@@ -6,7 +6,7 @@
         <el-button @click="console" icon="el-icon-bank-card" circle style="color: aliceblue" class="console-button" title="控制台"></el-button>
         <el-button circle class="main-button avater-button" @click="userClick">
           <span class="avater-span">
-            <img src="../assets/logo.png" alt="">
+            <img :src="imgUrl" alt="">
           </span>
         </el-button>
       </el-header>
@@ -35,7 +35,7 @@
           </el-menu>
         </div>
         <div class="content">
-          <router-view></router-view>
+          <router-view @func="getMsgFromSon"></router-view>
         </div>
       </el-main>
     </el-container>
@@ -45,6 +45,11 @@
 <script>
 
 export default ({
+  data(){
+    return{
+      imgUrl:'',
+    }
+  },
   methods: {
     homeClick(){
       this.$router.push('/MainPage/Overview')
@@ -71,9 +76,12 @@ export default ({
     console(){
       this.$router.push('/ConsolePage')
     },
+    getMsgFromSon(data){
+      this.imgUrl = data;
+    } 
   },
-  mounted(){
-    
+  created(){
+    this.imgUrl = window.sessionStorage.getItem('avatar');
   }
 })
 </script>
