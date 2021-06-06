@@ -2,17 +2,13 @@
   <div>
     <el-card class="about-card">
       <el-row style="padding-left: 30px">
-        <h2>{{bucketAbout.bucket.name}}</h2>
+        <h2>{{bucket}}</h2>
       </el-row>
       <el-col :span="12" class="info-col">
-        <el-row>地域：{{bucketAbout.bucket.location}}</el-row>
-        <el-row>&nbsp;</el-row>
-        <el-row>存储类型：{{bucketAbout.bucket.storageClass}}</el-row>
+        <el-row>地域：{{bucketAbout.location}}</el-row>
       </el-col>
       <el-col :span="12" class="info-col">
-        <el-row>读写权限：{{bucketAbout.rwPolicy}}</el-row>
-        <el-row>&nbsp;</el-row>
-        <el-row>创建时间：{{bucketAbout.bucket.creationDate}}</el-row>
+        <el-row>存储类型：{{bucketAbout.storageClass}}</el-row>
       </el-col>
     </el-card>
     <el-card class="flow-card">

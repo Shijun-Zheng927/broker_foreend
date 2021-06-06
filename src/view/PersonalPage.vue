@@ -23,15 +23,6 @@
               <i class="el-icon-s-goods"></i>
               <span slot="title">&nbsp;余额</span>
             </el-menu-item>
-            <el-menu-item index="3">
-              <i class="el-icon-info"></i>
-              <span slot="title">&nbsp;入门</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <i class="el-icon-s-help"></i>
-              <span slot="title">&nbsp;资源与学习</span>
-            </el-menu-item>
-            <!-- <div class="aside-padding"></div> -->
           </el-menu>
         </div>
         <div class="content">
@@ -61,12 +52,6 @@ export default ({
           break;
         case '2':
           this.$router.push('/PersonalPage/UserBanl');
-          break;
-        case '3':
-          this.$router.push('/MainPage/Overview');
-          break;
-        case '4':
-          this.$router.push('/MainPage/Overview');
           break;
       }
     },

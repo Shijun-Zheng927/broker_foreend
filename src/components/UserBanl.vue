@@ -27,21 +27,12 @@
         <el-table-column 
           prop="time"
           label="时间" 
-          width="180">
+          width="300">
         </el-table-column>
         <el-table-column
           prop="money"
-          label="金额"
-          width="180">
+          label="金额">
         </el-table-column>
-        <!-- <el-table-column
-          prop="location"
-          label="地域">
-        </el-table-column>
-        <el-table-column
-          prop="createDate"
-          label="创建时间">
-        </el-table-column> -->
       </el-table>
     </el-card>
   </div>
@@ -62,7 +53,6 @@ export default {
   methods: {
     recharge(){
       window.open('http://192.168.1.109:8443/alipay?amount='+this.num+'&token='+window.sessionStorage.getItem('phone'));
-      console.log('http://192.168.1.109:8443/alipay?amount='+this.num+'&token='+window.sessionStorage.getItem('token'));
     },
     numChange(value){
       console.log(value);
