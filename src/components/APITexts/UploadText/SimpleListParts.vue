@@ -16,10 +16,13 @@
     <template v-slot:form>
       <el-form label-position="left" label-width="150px" :model="formData">
         <el-form-item label="桶名称">
-          <el-input v-model="formData.bucketName" placeholder="xmsx-003"></el-input>
+          <el-input v-model="formData.bucketName" placeholder='brokertest-standard'></el-input>
         </el-form-item>
-        <el-form-item label="文件夹路径">
-          <el-input v-model="formData.pathname" placeholder="xxxxx/"></el-input>
+        <el-form-item label="目标存储路径">
+          <el-input v-model="formData.objectName" placeholder='tt.txt'></el-input>
+        </el-form-item>
+        <el-form-item label="分片管理Id">
+          <el-input v-model="formData.uploadId" placeholder='00000179DC4F33FF84C8A2DA81E75D0D'></el-input>
         </el-form-item>
       </el-form>
     </template>
@@ -39,14 +42,15 @@ export default {
       html:'',
       formData:{
         bucketName:'',
-        pathname:''
+        objectName:'',
+        uploadId:''
       },
       response:''
     }
   },
   methods:{
     send(){
-      this.axios.post('/createFolder',this.formData).then((res)=>{
+      this.axios.post('/simpleListParts',this.formData).then((res)=>{
         this.response = res.data;
       }).catch((err)=>{
         this.response = 'bad resquest';

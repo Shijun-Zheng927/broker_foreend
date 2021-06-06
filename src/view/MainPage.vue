@@ -30,14 +30,6 @@
                     <i class="el-icon-s-management"></i>
                     <span slot="title">&nbsp;产品功能</span>
                   </el-menu-item>
-                  <el-menu-item index="3">
-                    <i class="el-icon-s-goods"></i>
-                    <span slot="title">&nbsp;定价</span>
-                  </el-menu-item>
-                  <el-menu-item index="4">
-                    <i class="el-icon-info"></i>
-                    <span slot="title">&nbsp;入门</span>
-                  </el-menu-item>
                   <el-menu-item index="5">
                     <i class="el-icon-s-help"></i>
                     <span slot="title">&nbsp;API说明文档</span>
@@ -53,7 +45,10 @@
           <div class="help-aside" v-show="!show">
             <transition name="el-zoom-in-center">
               <div v-show="!show">
-                <el-card class="help-card">常见问题</el-card>
+                <el-card class="help-card">
+                  <h3>常见问题</h3>
+                  <router-link to="/APIText">帮助文档</router-link>
+                </el-card>
               </div>
             </transition>
           </div>
@@ -102,12 +97,6 @@ export default ({
           break;
         case '2':
           this.$router.push('/MainPage/Overview');
-          break;
-        case '3':
-          this.$router.push('/MainPage/Overview');
-          break;
-        case '4':
-          this.test();
           break;
         case '5':
           this.$router.push('/APIText');

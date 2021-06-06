@@ -14,20 +14,25 @@
         stripe
         style="width: 1100px;margin: 20px auto">
         <el-table-column
-          prop="fileName"
+          prop="key"
           label="文件名"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="fileSize"
-          label="文件大小"
-          width="180">
+          prop="size"
+          label="文件大小（单位字节）"
+          width="180"
+          v-if="category">
+        </el-table-column>
+        <el-table-column
+          prop="owner"
+          label="拥有者"
+          width="550">
         </el-table-column>
         <el-table-column
           label="操作">
           <template slot-scope="scope">
             <el-button @click="deleteFile(scope.$index, scope.row)" type="text" size="small">删除</el-button>
-            <el-button type="text" size="small" @click="rename(scope.$index, scope.row)">重命名</el-button>
             <el-button type="text" size="small" @click="download(scope.$index, scope.row)">下载</el-button>
           </template>
         </el-table-column>
@@ -40,13 +45,9 @@
 export default {
   data(){
     return{
-      tableData:[
-        {
-          fileName: 'test.txt',
-          fileSize: '200KB'
-        }
-      ],
+      tableData:[],
       bucket: '',
+      category: true,
     }
   },
   methods: {
@@ -56,17 +57,27 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.axios.delete('/deleteObject',{
+        this.axios.delete('/deleteObject',{data:{
           bucketName: this.bucket,
-          objectKey: ''
-        }).then(res => {
-          this.tableData.splice(index,1);
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
+          objectKey: row.key
+        }}).then(res => {
+          if(res.data == 'success'){
+            this.refresh();
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }else{
+            this.$message({
+              type: 'error',
+              message: '删除失败!'
+            });
+          }
         }).catch(err => {
-          console.log(err);
+          this.$message({
+            type: 'error',
+            message: '删除失败!'
+          });
         })
       }).catch(() => {
         this.$message({
@@ -96,83 +107,33 @@ export default {
       this.bucket = this.$route.query.bucket;
       console.log(this.bucket);
     },
-    rename(index,row){
-      // this.$prompt('请输入文件名', '重命名', {
-      //   confirmButtonText: '确定',
-      //   cancelButtonText: '取消',
-      // }).then(({ newName }) => {
-      //   this.axios.post('').then((res)=>{
-      //     this.$message({
-      //       type: 'success',
-      //       message: '修改后的文件名：' + newName
-      //     });
-      //     row.fileName = newName;
-      //   }).catch((err)=>{
-      //     this.$message({
-      //       type: 'error',
-      //       message: '修改失败'
-      //     }); 
-      //   })
-      // }).catch(() => {
-      //   this.$message({
-      //     type: 'info',
-      //     message: '取消修改'
-      //   });       
-      // });
-      this.$prompt('请输入文件名', '重命名', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-      }).then(({ value }) => {
-        this.$message({
-          type: 'success',
-          message: '修改后的文件名是: ' + value
-        });
-        row.fileName = value;
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });       
-      });
-    },
     newFolder(){
-      // this.$prompt('请输入目录名（/ 用于分割路径，可快速创建子目录，但不要以 / 或 \ 开头，不要出现连续的 /；）', '新建目录', {
-      //   confirmButtonText: '确定',
-      //   cancelButtonText: '取消',
-      // }).then(({ folder }) => {
-      //   this.axios.post('').then((res)=>{
-      //     this.$message({
-      //       type: 'success',
-      //       message: '目录名' + folder
-      //     });
-      //     this.tableData.unshift({
-      //       fileName: folder,
-      //       fileSize: ''
-      //     })
-      //   }).catch((err)=>{
-      //     this.$message({
-      //       type: 'error',
-      //       message: '修改失败'
-      //     }); 
-      //   })
-      // }).catch(() => {
-      //   this.$message({
-      //     type: 'info',
-      //     message: '取消创建'
-      //   });       
-      // });
       this.$prompt('请输入目录名', '新建目录', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
       }).then(({ value }) => {
-        this.$message({
-          type: 'success',
-          message: '新建的目录名是: ' + value
+        this.axios.post('/createFolder',{
+          bucketName: this.bucket,
+          pathname: value
+        }).then((res)=>{
+          if(res.data == 'success'){
+            this.refresh();
+            this.$message({
+              type: 'success',
+              message: '添加成功'
+            });
+          }else{
+            this.$message({
+              type: 'error',
+              message: '添加失败'
+            });
+          }
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: '添加失败，请检查输入目录名'
+          });       
         });
-        this.tableData.unshift({
-          fileName: value,
-          fileSize: ''
-        })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -186,16 +147,28 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // this.axios
-        //   .post("/uploadIntroduce", {
-        //     file: this.html,
-        //     name: this.name,
-        //   })
-        //   .then((res) => {
-        //     this.name = '';
-        //     this.content = '';
-        //     this.html = '';
-        //   });
+        this.axios.post("/checkPointDownload", {
+          bucketName: this.bucket,
+          objectKey: row.key,
+          partSize: 5000000,
+          taskNum: 5
+        }).then((res) => {
+          let url = res.data.url;
+          let a = document.createElement('a');
+          fetch(url).then(res => res.blob()).then(blob => {
+            a.href = URL.createObjectURL(blob);
+            a.download = row.key;
+            document.body.appendChild(a);
+            a.click();
+            URL.revokeObjectURL(a.href);
+            document.body.removeChild(a);
+          });
+        }).catch((err)=>{
+          this.$message({
+            type: 'error',
+            message: '下载失败'
+          });
+        });
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -207,6 +180,17 @@ export default {
   created(){
     this.getRouterData();
     this.refresh();
+    this.axios.post('/getBucketPlatform',{
+      bucketName: this.bucket
+    }).then((res)=>{
+      if(res.data == 'ALI'){
+        this.category = true;
+      }else{
+        this.category = false;
+      }
+    }).catch((err)=>{
+      console.log(err);
+    });
   }
 }
 </script>

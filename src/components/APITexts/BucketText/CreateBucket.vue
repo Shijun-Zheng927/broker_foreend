@@ -14,15 +14,15 @@
       ></mavon-editor>
     </template>
     <template v-slot:form>
-      <el-form label-position="left" label-width="80px" :model="formData">
+      <el-form label-position="left" label-width="150px" :model="formData">
         <el-form-item label="桶名称">
-          <el-input v-model="formData.bucketName"></el-input>
+          <el-input v-model="formData.bucketName" placeholder="xmsx-00x"></el-input>
         </el-form-item>
         <el-form-item label="存储类型">
-          <el-input v-model="formData.storageClass"></el-input>
+          <el-input v-model="formData.storageClass" placeholder="0"></el-input>
         </el-form-item>
         <el-form-item label="读写权限">
-          <el-input v-model="formData.rwPolicy"></el-input>
+          <el-input v-model="formData.rwPolicy" placeholder="0"></el-input>
         </el-form-item>
       </el-form>
     </template>
@@ -42,8 +42,8 @@ export default {
       html:'',
       formData:{
         bucketName:'',
-        region:'',
-        type:'',
+        storageClass:'',
+        rwPolicy :'',
       },
       response:''
     }
@@ -53,7 +53,7 @@ export default {
       this.axios.post('/createBucket',this.formData).then((res)=>{
         this.response = res.data;
       }).catch((err)=>{
-        console.log(err);
+        this.response = 'bad resquest';
       });
     }
   },

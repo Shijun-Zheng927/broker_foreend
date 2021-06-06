@@ -10,23 +10,13 @@
           <template slot="prepend">oss://{{bucket}}/</template>
         </el-input>
       </el-row>
-      <!-- <el-upload
-        class="upload-form"
-        ref="upload"
-        action=""
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :file-list="fileList"
-        :auto-upload="false">
-        <el-button slot="trigger" type="primary">选取文件</el-button>
-        <el-button style="margin-left: 10px;" type="success" @click="upload">上传</el-button>
-      </el-upload> -->
       <el-row>
         <el-upload
           class="upload-demo upload-rec"
           drag
           action=""
           :http-request="upload"
+          :limit="1"
           >
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -42,7 +32,6 @@ export default {
     return{
       bucket: '',
       fileList: [],
-      objectPath: 'oss://bucket1/',
       backPath:'',
     }
   },
@@ -59,7 +48,7 @@ export default {
     upload(param){
       var formData = new FormData();
       formData.append("bucketName",this.bucket);
-      formData.append("objectPath",this.objectPath);
+      formData.append("objectPath",this.backPath);
       formData.append("file",param.file);
       this.axios({
         url: "/putFile",
@@ -69,7 +58,10 @@ export default {
           "Content-Type": "multipart/form-data",
         },
       }).then((res) => {
-        console.log(res.data);
+        this.$message({
+          type: 'success',
+          message: '上传成功'
+        });
       }).catch((err)=>{
         console.log(err);
       });

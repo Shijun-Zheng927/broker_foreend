@@ -75,6 +75,7 @@ import PutFile from '../components/APITexts/UploadText/PutFile.vue'
 import PutFileStream from '../components/APITexts/UploadText/PutFileStream.vue'
 import PutStream from '../components/APITexts/UploadText/PutStream.vue'
 import PutString from '../components/APITexts/UploadText/PutString.vue'
+import SimpleListParts from '../components/APITexts/UploadText/SimpleListParts.vue'
 import SimpleListMultipartUploads from '../components/APITexts/UploadText/SimpleListMultipartUploads.vue'
 import APITemplate from '../components/APITemplate.vue'
 
@@ -178,6 +179,7 @@ const router = new Router({
         {path: 'PagingList', component: PagingList},
         {path: 'PagingListWithPrefix', component: PagingListWithPrefix},
         {path: 'SimpleList', component: SimpleList},
+        {path: 'SimpleListParts', component: SimpleListParts},
         {path: 'SimpleListWithNP', component: SimpleListWithNP},
         {path: 'SimpleListWithNum', component: SimpleListWithNum},
         {path: 'SimpleListWithPrefix', component: SimpleListWithPrefix},

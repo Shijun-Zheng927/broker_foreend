@@ -15,7 +15,7 @@
         <el-table-column
           prop="tagKey"
           label="Key"
-          width="180">
+          width="300">
           <template slot-scope="scope">
             <el-tag
               disable-transitions>{{scope.row.tagKey}}</el-tag>
@@ -23,8 +23,7 @@
         </el-table-column>
         <el-table-column
           prop="tagValue"
-          label="Value"
-          width="180">
+          label="Value">
           <template slot-scope="scope">
             <el-tag
               type="info"
@@ -80,12 +79,11 @@
         <el-table-column
           prop="targetBucketName"
           label="目标桶名称"
-          width="180">
+          width="300">
         </el-table-column>
         <el-table-column
           prop="targetPrefix"
-          label="桶内路径"
-          width="180">
+          label="桶内路径">
         </el-table-column>
       </el-table>
     </el-card>
@@ -97,26 +95,17 @@ export default {
   data(){
     return{
       bucket: '',
-      tableData: [{
-        tagKey: 'aaa',
-        tagValue: 'bbb'
-      },{
-        tagKey: 'ccc',
-        tagValue: 'ddd'
-      },{
-        tagKey: 'eee',
-        tagValue: 'fff'
-      }],
+      tableData: [],
+      keyList:{},
       newFlag: false,
       tagKey: '',
       tagValue: '',
       openFlag: false,
       logBucketName: '',
       logpath: '',
-      logData: [{
-        targetBucketName: 'aa',
-        targetPrefix: 'bb'
-      }],
+      logData: [],
+      keys:[],
+      values:[]
     }
   },
   methods:{
@@ -132,7 +121,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.axios.delete('/deleteBucketTagging',{bucketName: this.bucket}).then(res => {
+        this.axios.delete('/deleteBucketTagging',{data:{bucketName: this.bucket}}).then(res => {
           if(res.data === 'fail'){
             this.$message({
               type: 'error',
@@ -166,11 +155,17 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        for(var i = 0;i<this.tableData.length;i++){
+          this.keys.push(this.tableData[i].tagKey);
+          this.values.push(this.tableData[i].tagValue)
+        }
+        this.keys.push(this.tagKey);
+        this.values.push(this.tagValue);
         this.axios
           .post("/setBucketTagging", {
             bucketName: this.bucket,
-            tagKey: this.tagKey,
-            tagValue: this.tagValue,
+            tagKey: this.keys,
+            tagValue: this.values,
           })
           .then((res) => {
             if(res.data === 'fail'){
@@ -186,6 +181,8 @@ export default {
               this.tagKey = '';
               this.tagValue = '';
               this.newFlag = false;
+              this.tableData=[];
+              this.getTag();
             }
           }).catch((err)=>{
             this.$message({
@@ -222,6 +219,7 @@ export default {
               type: 'success',
               message: '开启成功!'
             });
+            this.getLog();
           }else{
             this.$message({
               type: 'error',
@@ -229,7 +227,10 @@ export default {
             }); 
           }
         }).catch(err => {
-          console.log(err);
+          this.$message({
+            type: 'error',
+            message: '开启失败，检查您输入的值'
+          }); 
         })
       }).catch(() => {
         this.$message({
@@ -252,6 +253,7 @@ export default {
               type: 'success',
               message: '关闭成功!'
             });
+            this.logData = [];
           }else{
             this.$message({
               type: 'error',
@@ -267,25 +269,42 @@ export default {
           message: '已取消'
         });          
       });
+    },
+    getLog(){
+      this.axios.post('/getBucketLogging',{
+        bucketName: this.bucket
+      }).then((res)=>{
+        var key = Object.keys(res.data)[0]
+        if(key!=null){
+          var value = res.data[key];
+          this.logData.push({
+            targetBucketName: key,
+            targetPrefix: value
+          });
+        }
+      });
+    },
+    getTag(){
+      this.axios.get('/getBucketTagging',{params:{
+        bucketName: this.bucket
+      }}).then((res)=>{
+        for(var a in res.data){
+          console.log(a);
+          var value = res.data[a];
+          this.tableData.push({
+            tagKey: a,
+            tagValue: value
+          });
+        }
+      }).catch((err)=>{
+        console.log(err);
+      });
     }
   },
   created(){
     this.getRouterData();
-    this.axios.get('/getBucketTagging',{params:{
-      bucketName: this.bucket
-    }}).then((res)=>{
-      this.tableData = res.data;
-    }).catch((err)=>{
-      console.log(err);
-    });
-    this.axios.post('/getBucketLogging',{
-      bucketName: this.bucket
-    }).then((res)=>{
-      this.logData.push({
-        targetBucketName: res.data.targetBucketName,
-        targetPrefix: res.data.targetPrefix
-      })
-    })
+    this.getLog();
+    this.getTag();
   }
 }
 </script>

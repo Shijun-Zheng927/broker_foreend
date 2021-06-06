@@ -5,7 +5,7 @@
         <h2>修改访问权限</h2>
       </el-row>
       <el-row class="choose-policy">
-        Bucket ACL:&nbsp;&nbsp;&nbsp;&nbsp;
+        设置读写访问权限:&nbsp;&nbsp;&nbsp;&nbsp;
         <el-radio-group v-if="category" v-model="rwPolicy">
           <el-radio-button
             v-for="item in cateOptions1"
@@ -36,7 +36,7 @@ export default {
     return{
       bucket: '',
       category: true,
-      rwPolicy: '0',
+      rwPolicy: '',
       cateOptions1: [{
         label: '0',
         value: '私有'
@@ -63,6 +63,7 @@ export default {
         label: '4',
         value: '桶、对象公共读'
       },],
+      oldPolicy:''
     }
   },
   methods:{
@@ -81,17 +82,19 @@ export default {
           bucketName: this.bucket,
           rwPolicy: this.rwPolicy,
         }).then((res)=>{
-          if(res.data === 'fail'){
-            this.$message({
-              type: 'error',
-              message: '修改失败'
-            })
-          }else{
+          if(res.data === 'success'){
             this.$message({
               type: 'success',
               message: '修改成功!'
             });
+          }else{
+            this.$message({
+              type: 'error',
+              message: '修改失败'
+            });
           }
+        }).catch((err)=>{
+          console.log(err);
         })
       }).catch(() => {
         this.$message({
@@ -103,6 +106,17 @@ export default {
   },
   created(){
     this.getRouterData();
+    this.axios.post('/getBucketPlatform',{
+      bucketName:this.bucket
+    }).then((res)=>{
+      if(res.data == 'ALI'){
+        this.category = true;
+      }else{
+        this.category = false;
+      }
+    }).catch((err)=>{
+      console.log(err);
+    });
   }
 }
 </script>

@@ -18,7 +18,7 @@
             @open="openDirec"
             @close="closeDirec"
             @select="handleSelect"
-            :default-openeds="['2']">
+            >
             <el-menu-item index="1">
               <i class="el-icon-menu"></i>
               <span slot="title">概述</span>
@@ -66,15 +66,16 @@
                 <el-menu-item index="3-9">断点续传</el-menu-item>
                 <el-menu-item index="3-10">分片上传</el-menu-item>
                 <el-menu-item index="3-11">取消分片上传</el-menu-item>
-                <el-menu-item index="3-12">简单列举分片</el-menu-item>
-                <el-menu-item index="3-13">列举分片上传</el-menu-item>
-                <el-menu-item index="3-14">列举所有分片上传事件</el-menu-item>
-                <el-menu-item index="3-15">上传Byte数组（类型1）</el-menu-item>
-                <el-menu-item index="3-16">列举所有分片（类型1）</el-menu-item>
-                <el-menu-item index="3-17">简单列举分片上传事件（类型1）</el-menu-item>
-                <el-menu-item index="3-18">创建文件夹（类型2）</el-menu-item>
-                <el-menu-item index="3-19">分段上传初始化（类型2）</el-menu-item>
-                <el-menu-item index="3-20">合并分段上传（类型2）</el-menu-item>
+                <el-menu-item index="3-12">简单列举所有已上传分片</el-menu-item>
+                <el-menu-item index="3-13">列举所有已上传分片</el-menu-item>
+                <el-menu-item index="3-14">简单列举分片上传事件</el-menu-item>
+                <el-menu-item index="3-15">分页列举所有上传事件</el-menu-item>
+                <el-menu-item index="3-16">上传Byte数组（类型1）</el-menu-item>
+                <el-menu-item index="3-17">分页列举已上传分片（类型1）</el-menu-item>
+                <el-menu-item index="3-18">列举全部分片上传事件（类型1）</el-menu-item>
+                <el-menu-item index="3-19">创建文件夹</el-menu-item>
+                <el-menu-item index="3-20">分段上传初始化（类型2）</el-menu-item>
+                <el-menu-item index="3-21">合并分段上传（类型2）</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="4">
@@ -243,30 +244,33 @@ export default ({
           this.$router.push('/APIText/AbortMultipartUpload');
           break;
         case '3-12':
-          this.$router.push('/APIText/ListPartsAll');
+          this.$router.push('/APIText/SimpleListParts');
           break;
         case '3-13':
-          this.$router.push('/APIText/SimpleListMultipartUploads');
+          this.$router.push('/APIText/ListPartsAll');
           break;
         case '3-14':
-          this.$router.push('/APIText/ListMultipartUploadsBP');
+          this.$router.push('/APIText/SimpleListMultipartUploads');
           break;
         case '3-15':
-          this.$router.push('/APIText/PutBytes');
+          this.$router.push('/APIText/ListMultipartUploadsBP');
           break;
         case '3-16':
-          this.$router.push('/APIText/ListPartsByPaper');
+          this.$router.push('/APIText/PutBytes');
           break;
         case '3-17':
-          this.$router.push('/APIText/ListMultipartUploads');
+          this.$router.push('/APIText/ListPartsByPaper');
           break;
         case '3-18':
-          this.$router.push('/APIText/CreateFolder');
+          this.$router.push('/APIText/ListMultipartUploads');
           break;
         case '3-19':
-          this.$router.push('/APIText/InitMultipartUpload');
+          this.$router.push('/APIText/CreateFolder');
           break;
         case '3-20':
+          this.$router.push('/APIText/InitMultipartUpload');
+          break;
+        case '3-21':
           this.$router.push('/APIText/CompMultipartUpload');
           break;
         case '4-1':
