@@ -69,8 +69,6 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {
 				if (valid) {
-					// alert('submit!');
-					// console.log(this.ruleForm);
 					this.axios.post("/login",this.ruleForm).then(res =>{
 						console.log(res);
 						if(res.data.phone==null){
@@ -83,7 +81,7 @@ export default {
 						}
 					}).catch(err=>{
 						console.log(err);
-					})
+					});
 				} else {
 					return false;
 				}

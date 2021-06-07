@@ -22,7 +22,7 @@
     </el-card>
     <div v-for="(item,index) in ALItemAbout" :key="index">
       <el-card class="item-card">
-        <el-col :span="20">
+        <el-col :span="20" style="margin-left:30px">
           <el-row class="item-row1">
             {{item.type}}
           </el-row>
@@ -34,35 +34,26 @@
             <el-col :span="5">OSS传输加速</el-col>
             <el-col :span="5">图片处理</el-col>
             <el-col :span="5">最少存储时间要求</el-col>
-            <!-- <el-col :span="5">多协议</el-col> -->
           </el-row>
           <el-row class="item-row4">
             <el-col :span="5">{{item.minStorageTime}}</el-col>
             <el-col :span="5">{{item.ossAcceleration}}</el-col>
             <el-col :span="5">{{item.imageProcessing}}</el-col>
             <el-col :span="5">{{item.minStorageTime}}</el-col>
-            <!-- <el-col :span="4">支持多协议访问</el-col> -->
           </el-row>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-row class="price-row1">
             <span class="price">￥{{item.lrsPrice}}</span>
-            <span class="unit">/GB/月(LRS)</span>
+            <span class="unit">/GB</span>
           </el-row>
-          <el-row class="price-row1" style="padding-top: 0" v-if="item.zrsPrice">
-            <span class="price">￥0.09</span>
-            <span class="unit">/GB/月(ZRS)</span>
-          </el-row>
-          <el-row class="price-row2" v-if="item.zrsPrice">
-            <el-button type="primary" style="margin: 0 auto" @click="createBucket">了解详情</el-button>
-          </el-row>
-          <el-row class="price-row2"  style="padding-top: 30px" v-if="!item.zrsPrice">
-            <el-button type="primary" style="margin: 0 auto" @click="createBucket">了解详情</el-button>
+          <el-row class="price-row2"  style="padding-top: 30px">
+            <el-button type="primary" style="margin: 0 auto" @click="createBucket">订阅</el-button>
           </el-row>
         </el-col>
       </el-card>
       <el-card class="item-card" v-if="HWItemAbout[index]">
-        <el-col :span="20">
+        <el-col :span="20" style="margin-left:30px">
           <el-row class="item-row1">
             {{HWItemAbout[index].type}}
           </el-row>
@@ -74,23 +65,21 @@
             <el-col :span="5">设计持久性（单AZ）</el-col>
             <el-col :span="5">设计可用性（单AZ）</el-col>
             <el-col :span="5">响应</el-col>
-            <!-- <el-col :span="5">多协议</el-col> -->
           </el-row>
           <el-row class="item-row4">
             <el-col :span="5">{{HWItemAbout[index].minStorageTime}}</el-col>
             <el-col :span="5">{{HWItemAbout[index].designPersistenceSingle}}</el-col>
             <el-col :span="5">{{HWItemAbout[index].designAvailabilitySingle}}</el-col>
             <el-col :span="5">{{HWItemAbout[index].responseTime}}</el-col>
-            <!-- <el-col :span="4">支持多协议访问</el-col> -->
           </el-row>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-row class="price-row1">
             <span class="price">￥{{HWItemAbout[index].huaweiPrice}}</span>
-            <span class="unit">/GB/月</span>
+            <span class="unit">/GB</span>
           </el-row>
           <el-row class="price-row2"  style="padding-top: 30px">
-            <el-button type="primary" style="margin: 0 auto" @click="createBucket">了解详情</el-button>
+            <el-button type="primary" style="margin: 0 auto" @click="createBucket">订阅</el-button>
           </el-row>
         </el-col>
       </el-card>
@@ -118,20 +107,11 @@ export default {
   created() {
     this.axios.get("/getAli").then((res) => {
       this.ALItemAbout = res.data;
-      // // console.log(this.ALItemAbout.length)
-      // for(var i=0;i<res.data.length;i++){
-      //   this.itemAbout[2*i] = this.ALItemAbout[i];
-      // }
-      // console.log(this.itemAbout);
     }).catch((err)=>{
       console.log(err);
     });
     this.axios.get("/getHuawei").then((res) => {
       this.HWItemAbout = res.data;
-      // for(var i=0;i<res.data.length;i++){
-      //   this.itemAbout[2*i+1] = this.HWItemAbout[i];
-      // }
-      // console.log(this.itemAbout);
     }).catch((err)=>{
       console.log(err);
     });

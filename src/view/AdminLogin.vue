@@ -3,7 +3,7 @@
     <div class="loginForm">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="" prop="adminName">
-          <el-input v-model="ruleForm.adminName" prefix-icon='el-icon-user' placeholder="请输入用户名"></el-input>
+          <el-input v-model="ruleForm.adminName" prefix-icon='el-icon-user' placeholder="请输入手机号"></el-input>
         </el-form-item>
 				<el-form-item label="" prop="password">
           <el-input type="password" v-model="ruleForm.password" prefix-icon='el-icon-lock' placeholder="请输入密码"></el-input>
@@ -28,7 +28,7 @@ export default {
 			},
 			rules:{
 				adminName:[
-					{ required: true, message: '请输入用户名', trigger: 'blur' }
+					{ required: true, message: '请输入手机号', trigger: 'blur' }
 				],
 				password:[
 					{ required: true, message: '请输入密码', trigger: 'blur' }
@@ -40,19 +40,15 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {
 				if (valid) {
-					// console.log(this.ruleForm);
-					// this.axios.post("/adminLogin",this.ruleForm).then(res =>{
-					// 	if(res.data.flag=='fail'){
-					// 		this.$message.error("账号或密码错误");
-					// 	}else{
-					// 		window.sessionStorage.setItem("token",res.data.token);
-					// 		window.sessionStorage.setItem("adminName",this.ruleForm.adminName);
-					// 		this.$router.push('/adminhome')
-					// 	}
-					// }).catch(err=>{
-					// 	console.log(err);
-					// })
-          this.$router.push('/MdPage')
+					this.axios.post("/login",this.ruleForm).then(res =>{
+						if(res.data.phone==null){
+							this.$message.error("账号或密码错误");
+						}else{
+							this.$router.push('/MdPage')
+						}
+					}).catch(err=>{
+						console.log(err);
+					});
 				} else {
 					return false;
 				}

@@ -81,15 +81,18 @@ export default {
       this.html = render;
     },
     upIntroduction(){
+      if(this.html==''||this.name==''){
+        this.$message({
+          type: 'error',
+          message: '提交失败!'
+        });
+        return;
+      }
       this.$confirm('确认提交吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '提交成功!'
-        });
         this.axios
           .post("/uploadIntroduce", {
             file: this.html,
@@ -99,6 +102,15 @@ export default {
             this.name = '';
             this.content = '';
             this.html = '';
+            this.$message({
+              type: 'success',
+              message: '提交成功!'
+            });
+          }).catch((err)=>{
+            this.$message({
+              type: 'error',
+              message: '提交失败!'
+            });
           });
         // this.axios.get("/getIntroduceName",{params:{name: this.name}})
       }).catch(() => {

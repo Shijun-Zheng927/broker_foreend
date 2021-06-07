@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style>
-.tem-md {
+.md {
   width: 90%;
   margin: 20px auto;
   border: none !important;

@@ -27,14 +27,9 @@
                     <span slot="title">&nbsp;概览</span>
                   </el-menu-item>
                   <el-menu-item index="2">
-                    <i class="el-icon-s-management"></i>
-                    <span slot="title">&nbsp;产品功能</span>
-                  </el-menu-item>
-                  <el-menu-item index="5">
                     <i class="el-icon-s-help"></i>
                     <span slot="title">&nbsp;API说明文档</span>
                   </el-menu-item>
-                  <!-- <div class="aside-padding"></div> -->
                 </el-menu>
               </div>
             </transition>
@@ -96,9 +91,6 @@ export default ({
           this.$router.push('/MainPage/Overview');
           break;
         case '2':
-          this.$router.push('/MainPage/Overview');
-          break;
-        case '5':
           this.$router.push('/APIText');
           break;
       }
@@ -117,7 +109,6 @@ export default ({
     test(){
       this.axios.post('/downloadTest').then((res)=>{
         console.log(res.data.url);
-        // this.itemClick();
         let a = document.createElement('a');
         let url = 'http://192.168.1.109:8443/file/a.jpg';
         console.log(this.url);

@@ -29,9 +29,6 @@
       <el-row style="padding-left: 30px;padding-top: 30px">
         <h4>修改密码</h4>
         <el-form :label-position="labelPosition" label-width="80px" :model="passwordForm" :rules="rules" ref="passwordForm">
-          <el-form-item label="原密码" prop="oldPass">
-            <el-input v-model="passwordForm.oldPass" style="width: 300px"></el-input>
-          </el-form-item>
           <el-form-item label="新密码" prop="newPass">
             <el-input v-model="passwordForm.newPass" style="width: 300px"></el-input>
           </el-form-item>
@@ -51,7 +48,7 @@ export default {
     var validatePass2 = (rule, value, callback) => {
 			if (value === '') {
 				callback(new Error('请再次输入密码'));
-			} else if (value !== this.ruleForm.password) {
+			} else if (value !== this.passwordForm.newPass) {
 				callback(new Error('两次输入密码不一致!'));
 			} else {
 				callback();
@@ -93,7 +90,27 @@ export default {
     phoneChange(formName){
       this.$refs[formName].validate((valid) => {
         if(valid) {
-
+          this.axios.post('/setPhone',{
+            phone: this.formLabelAlign.phone
+          }).then((res)=>{
+            if(res.data == '1'){
+              this.$message({
+                type: 'success',
+                message: '修改成功'
+              });
+              window.sessionStorage.setItem("phone",this.formLabelAlign.phone);
+            }else{
+              this.$message({
+                type: 'error',
+                message: '修改失败'
+              });
+            }
+          }).catch((err)=>{
+            this.$message({
+              type: 'error',
+              message: '修改失败'
+            });
+          });
         }else {
           return false;
         }
@@ -102,7 +119,26 @@ export default {
     passChange(formName) {
       this.$refs[formName].validate((valid) => {
         if(valid) {
-
+          this.axios.post('/setPassword',{
+            password: this.passwordForm.newPass
+          }).then((res)=>{
+            if(res.data == '1'){
+              this.$message({
+                type: 'success',
+                message: '修改成功'
+              });
+            }else{
+              this.$message({
+                type: 'error',
+                message: '修改失败'
+              });
+            }
+          }).catch((err)=>{
+            this.$message({
+              type: 'error',
+              message: '修改失败'
+            });
+          });
         }else {
           return false;
         }
