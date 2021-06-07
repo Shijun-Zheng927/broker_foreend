@@ -7,13 +7,13 @@
 						<div class="web-name">
 							<i class="el-icon-cloudy" style="font-size: 40px;float: left;"></i>
 							<div class="name-div">
-								&nbsp;&nbsp;云服务broker
+								&nbsp;&nbsp;云存储broker
 							</div>
 						</div>
 						<br/>
-						<div class="web-infor">
+						<!-- <div class="web-infor">
 							打破品牌限制
-						</div>
+						</div> -->
 					</div>
         </el-col>
         <el-col :span="12">

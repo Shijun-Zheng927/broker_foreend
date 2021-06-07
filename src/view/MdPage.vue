@@ -39,24 +39,7 @@ export default {
     }
   },
   methods: {
-    // userClick(){
-    //   this.$router.push('/PersonalPage')
-    // },
     imgAdd(pos, file){
-      // var formData = new FormData();
-      // formData.append("file", file);
-      // console.log(formData.getAll("file"));
-      // this.axios({
-      //   url: "/uploadImg",
-      //   data: formData,
-      //   method: "post",
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // }).then((res) => {
-      //   console.log(res.data);
-      //   this.$refs.md.$img2Url(pos, res.data);
-      // });
       var formData = new FormData();
       formData.append("bucketName", 'test');
       formData.append("objectPath", 'test');

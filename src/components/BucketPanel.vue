@@ -3,22 +3,11 @@
     <div class="aside">
       <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
         <el-breadcrumb-item :to="{ path: '/ConsolePage' }">Bucket列表</el-breadcrumb-item>
-        <!-- <el-breadcrumb-item>Bucket列表</el-breadcrumb-item> -->
         <el-breadcrumb-item>{{bucket}}</el-breadcrumb-item>
       </el-breadcrumb>
       <el-menu
         default-active="1"
         @select="handleSelect">
-        <!-- <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>存储空间</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu> -->
         <el-menu-item index="1">
           <i class="el-icon-info"></i>
           <span slot="title">&nbsp;概览</span>

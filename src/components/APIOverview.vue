@@ -42,5 +42,16 @@ export default {
 </script>
 
 <style scoped>
-
+.md {
+  width: 90%;
+  margin: 20px auto;
+  border: none !important;
+}
+.tem-card{
+  width: 1200px;
+  margin: 40px auto;
+}
+.tem-content-div{
+  padding: 0 30px 0 30px;
+}
 </style>

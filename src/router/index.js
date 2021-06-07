@@ -212,17 +212,17 @@ const router = new Router({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/LoginPage'||to.path === '/RegisterPage') {
-//     next();
-//   } else {
-//     let token = window.sessionStorage.getItem("token");
+router.beforeEach((to, from, next) => {
+  if (to.path === '/LoginPage'||to.path === '/RegisterPage') {
+    next();
+  } else {
+    let token = window.sessionStorage.getItem("token");
  
-//     if (!token) {
-//       next('/LoginPage');
-//     } else {
-//       next();
-//     }
-//   }
-// });
+    if (!token) {
+      next('/LoginPage');
+    } else {
+      next();
+    }
+  }
+});
 export default router
