@@ -24,14 +24,23 @@
         :data="tableData"
         stripe
         style="width: 1100px;margin: 20px auto">
+        <el-table-column
+          prop="orderNum"
+          label="订单号"
+          width="500">
+        </el-table-column>
         <el-table-column 
           prop="time"
           label="时间" 
           width="300">
         </el-table-column>
         <el-table-column
-          prop="money"
+          prop="amount"
           label="金额">
+        </el-table-column>
+        <el-table-column
+          prop="result"
+          label="充值结果">
         </el-table-column>
       </el-table>
     </el-card>
@@ -44,10 +53,7 @@ export default {
     return {
       banlance: '0',
       num: 1,
-      tableData: [{
-        time: '20001201',
-        money: '5000'
-      }]
+      tableData: []
     }
   },
   methods: {
@@ -56,12 +62,22 @@ export default {
     },
     numChange(value){
       console.log(value);
+    },
+    getBanl(){
+      this.axios.post("/getRecharge").then((res) => {
+        this.tableData = res.data;
+      }).catch((err)=>{
+        console.log(err);
+      });
     }
   },
   created() {
     this.axios.post("/getAccount").then((res) => {
       this.banlance = res.data;
-    })
+    }).catch((err)=>{
+      console.log(err);
+    });
+    this.getBanl();
   }
 }
 </script>
