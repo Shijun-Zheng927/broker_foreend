@@ -75,7 +75,7 @@
                 <el-menu-item index="3-18">列举全部分片上传事件（类型1）</el-menu-item>
                 <el-menu-item index="3-19">创建文件夹</el-menu-item>
                 <el-menu-item index="3-20">分段上传初始化（类型2）</el-menu-item>
-                <el-menu-item index="3-21">合并分段上传（类型2）</el-menu-item>
+                <el-menu-item index="3-21">合并分段上传</el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="4">
